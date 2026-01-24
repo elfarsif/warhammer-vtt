@@ -8,46 +8,26 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+import org.example.Mini;
 
 public class App extends Application {
+
     private Pane createMini(){
-        Pane pane = new Pane();
         Rectangle model = new Rectangle(100, 50, Color.BLUE);
         Line measureTape = new Line(0, 0, 0, 0);
+        Text text = new Text("1.0in");
+        Pane pane = new Pane(model,measureTape,text);
 
-        model.setOnMousePressed(event -> {
-            model.setUserData(new double[]{
-                model.getTranslateX() - event.getSceneX(),
-                model.getTranslateY() - event.getSceneY()
-            });
-            double centerX = model.getTranslateX()+model.getWidth()/2;
-            double centerY = model.getTranslateY()+model.getHeight()/2;
-            measureTape.setStartX(centerX);
-            measureTape.setStartY(centerY);
-            measureTape.setEndX(centerX);
-            measureTape.setEndY(centerY);
-        });
+        Mini mini = new Mini(model, measureTape, pane,text);
 
-        model.setOnMouseDragged(event -> {
-            double[] offset = (double[]) model.getUserData();
-            model.setTranslateX(event.getSceneX() + offset[0]);
-            model.setTranslateY(event.getSceneY() + offset[1]);
-            measureTape.setEndX(model.getTranslateX()+model.getWidth()/2);
-            measureTape.setEndY(model.getTranslateY() + model.getHeight() / 2);
-        });
-
-        pane.getChildren().addAll(model, measureTape);
-
-        return pane;
+        return mini.getPane();
     }
 
     
@@ -60,7 +40,6 @@ public class App extends Application {
             System.out.println("button clicke");
         });
         
-       
         
         vbox.getChildren().addAll(button,this.createMini());
         return new Pane(vbox);
