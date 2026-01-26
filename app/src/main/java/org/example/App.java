@@ -4,20 +4,30 @@
 package org.example;
 
 
+
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.SplitPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.example.Mini;
 
 public class App extends Application {
+    
+
+    
 
     private Pane createMini(){
         Rectangle model = new Rectangle(100, 50, Color.BLUE);
@@ -32,17 +42,47 @@ public class App extends Application {
 
     
     private Parent createContent(){
+        BorderPane root = new BorderPane();
+
+        //tab pane
         VBox vbox = new VBox();
-        
 
         Button button = new Button("hey");
         button.setOnMouseClicked(event2->{
             System.out.println("button clicke");
         });
+
+        vbox.getChildren().addAll(button);
+        root.setTop(vbox);
         
+        //splitpane
+        //left panel
+        VBox leftpanel = new VBox();
+
+        leftpanel.setMinWidth(50);
+        leftpanel.setBackground(Background.fill(Color.LIGHTCYAN));
+
+
+        //right sidePanel
+        Picture picture = new Picture("");
+        Image image = new Image(getClass().getResourceAsStream("/custodian_guard.jpg"));
+        ImageView imageView = new ImageView(image);
+
+        VBox rightpanel = new VBox();
+        rightpanel.setMinWidth(200);
+        rightpanel.setBackground(Background.fill(Color.LIGHTCYAN));
+        rightpanel.getChildren().addAll(imageView);
+
+
+        //board
+        Pane pane = new Pane();
+        pane.setBackground(Background.fill(Color.LIGHTGREEN));
+        pane.setMinWidth(1000);
+        SplitPane splitPane = new SplitPane(leftpanel,pane,rightpanel);
+        root.setCenter(splitPane);
+
         
-        vbox.getChildren().addAll(button,this.createMini());
-        return new Pane(vbox);
+        return root;
     }
 
 

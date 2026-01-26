@@ -1,6 +1,7 @@
 package org.example;
 
 
+import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -17,22 +18,28 @@ public class Mini{
     public Mini(Rectangle model,Line measureTape,Pane pane,Text text){
         this.model = model;
 		this.measureTape = measureTape;
-        this.model.setOnMousePressed(event -> this.handleMiniClick(event));
-        this.model.setOnMouseDragged(event -> this.handleMouseDragged(event));
         this.pane = pane;
         this.text = text;
+
+        this.model.setOnMousePressed(event -> this.handleMiniClick(event));
+        this.model.setOnMouseDragged(event -> this.handleMouseDragged(event));
+
     }
 
     private void handleMouseDragged(MouseEvent event){
         double[] offset = (double[]) model.getUserData();
+
         model.setTranslateX(event.getSceneX() + offset[0]);
         model.setTranslateY(event.getSceneY() + offset[1]);
-        measureTape.setEndX(model.getTranslateX()+model.getWidth()/2);
-        measureTape.setEndY(model.getTranslateY() + model.getHeight() / 2);
+
+        Point2D drag = pane.sceneToLocal(event.getSceneX(), event.getSceneY());
+
+        measureTape.setEndX(drag.getX());
+        measureTape.setEndY(drag.getY());
 
         text.setX(model.getTranslateX());
         text.setY(model.getTranslateY());
-        
+
         double a = measureTape.getEndX() - measureTape.getStartX();
         double b = measureTape.getEndY() - measureTape.getStartY();
         double hypotenus = Math.sqrt(a * a + b * b);
@@ -43,16 +50,16 @@ public class Mini{
     private void handleMiniClick(MouseEvent event){
         model.setUserData(new double[]{
                 model.getTranslateX() - event.getSceneX(),
-                model.getTranslateY() - event.getSceneY(),
-                event.getSceneX(),
-                event.getSceneY()
+                model.getTranslateY() - event.getSceneY()
             });
-        double centerX = model.getTranslateX()+model.getWidth()/2;
-        double centerY = model.getTranslateY()+model.getHeight()/2;
-        measureTape.setStartX(centerX);
-        measureTape.setStartY(centerY);
-        measureTape.setEndX(centerX);
-        measureTape.setEndY(centerY);
+
+        Point2D click = pane.sceneToLocal(event.getSceneX(), event.getSceneY());
+        
+
+        measureTape.setStartX(click.getX());
+        measureTape.setStartY(click.getY());
+        measureTape.setEndX(click.getX());
+        measureTape.setEndY(click.getY());
     }
 
     protected Pane getPane(){return this.pane;}
