@@ -3,26 +3,30 @@
  */
 package org.example;
 
-
-
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 
 public class App extends Application {
     
@@ -64,25 +68,70 @@ public class App extends Application {
 
 
         //right sidePanel
-        Picture picture = new Picture("");
-        Image image = new Image(getClass().getResourceAsStream("/custodian_guard.jpg"));
-        ImageView imageView = new ImageView(image);
-
         VBox rightpanel = new VBox();
         rightpanel.setMinWidth(200);
         rightpanel.setBackground(Background.fill(Color.LIGHTCYAN));
-        rightpanel.getChildren().addAll(imageView);
+
+        
+
+        Picture picture = new Picture("/custodian_guard.jpg");
+        Stats stats = new Stats(
+            new Movement(6),
+            new Toughness(7)
+        );
+        DataSheet dataSheet = new DataSheet(picture,stats);
+
+        PictureView pictureView = new PictureView(
+                picture,
+                rightpanel,
+                new ImageView(new Image(getClass().getResourceAsStream(picture.getImagePath())))
+        );
+
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+
+        gridPane.add(new Label("M"), 0, 0);
+        gridPane.add(new Label("T"), 1, 0);
+
+        //stats
+        gridPane.add(new Label("6"), 0, 1);
+        gridPane.add(new Label("7"), 1, 1);
+
+        gridPane.prefWidthProperty().bind(rightpanel.widthProperty());
+
+        Accordion accordion = new Accordion();
+
+        TitledPane pane1 = new TitledPane("Meele", new VBox());
+
+        accordion.getPanes().addAll(pane1);
+        rightpanel.getChildren().addAll(pictureView.getImageView(),gridPane,accordion);
 
 
-        //board
-        Pane pane = new Pane();
-        pane.setBackground(Background.fill(Color.LIGHTGREEN));
-        pane.setMinWidth(1000);
-        SplitPane splitPane = new SplitPane(leftpanel,pane,rightpanel);
+        //board pane
+        SplitPane splitPane = new SplitPane(leftpanel,this.makeBoardPane(),rightpanel);
         root.setCenter(splitPane);
 
         
         return root;
+    }
+
+    private Pane makeBoardPane(){
+        //mini
+        Model model = new Model(2,2,new Position(0,0));
+        Board board = new Board(44,30,model);
+
+
+        StackPane pane = new StackPane();
+        pane.setBackground(Background.fill(Color.LIGHTGREEN));
+        pane.setMinWidth(1000);
+
+        //boardview
+        Pane boardviewPane = new Pane();
+        BoardView boardView = new BoardView(board,boardviewPane);
+
+        pane.getChildren().addAll(boardView.getPane());
+
+        return pane;
     }
 
 

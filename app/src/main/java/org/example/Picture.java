@@ -7,7 +7,9 @@ public class Picture{
         this.imagePath = imagePath;
     }
 
-    
+    public String getImagePath(){
+        return this.imagePath;
+    }
 
 
 }
