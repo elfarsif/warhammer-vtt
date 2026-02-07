@@ -30,20 +30,6 @@ import javafx.stage.Stage;
 
 public class App extends Application {
     
-
-    
-
-    private Pane createMini(){
-        Rectangle model = new Rectangle(100, 50, Color.BLUE);
-        Line measureTape = new Line(0, 0, 0, 0);
-        Text text = new Text("1.0in");
-        Pane pane = new Pane(model,measureTape,text);
-
-        Mini mini = new Mini(model, measureTape, pane,text);
-
-        return mini.getPane();
-    }
-
     
     private Parent createContent(){
         BorderPane root = new BorderPane();
@@ -117,7 +103,7 @@ public class App extends Application {
 
     private Pane makeBoardPane(){
         //mini
-        Model model = new Model(2,2,new Position(0,0));
+        Model model = new Model(2,2,new Position(0,0),new MeasuringTape(new Length(0.0)));
         Board board = new Board(44,30,model);
 
 

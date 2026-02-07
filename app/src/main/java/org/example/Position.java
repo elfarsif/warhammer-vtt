@@ -1,19 +1,29 @@
 package org.example;
 
-public class Position{
-    private Integer x,y;
+import java.util.ArrayList;
+import java.util.List;
 
-    protected Position(Integer x, Integer y){
+public class Position {
+    private Integer x, y;
+    private final List<PositionListener> listeners = new ArrayList<>();
+
+    protected Position(Integer x, Integer y) {
         this.x = x;
         this.y = y;
     }
 
-    public void moveTo(Integer x, Integer y){
-        this.x = x;
-        this.y = y;
+    public void addListener(PositionListener listener) {
+        listeners.add(listener);
     }
 
-    public Integer x(){return this.x;}
-    public Integer y(){return this.y;}
+    public void moveTo(Integer x, Integer y) {
+        this.x = x;
+        this.y = y;
+        for (PositionListener l : listeners) {
+            l.onPositionChanged(x, y);
+        }
+    }
 
+    public Integer x() { return this.x; }
+    public Integer y() { return this.y; }
 }
