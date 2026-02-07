@@ -3,6 +3,19 @@
  */
 package org.example;
 
+import org.example.model.Board;
+import org.example.model.Length;
+import org.example.model.MeasuringTape;
+import org.example.model.Model;
+import org.example.model.Position;
+import org.example.model.datasheet.DataSheet;
+import org.example.model.datasheet.Movement;
+import org.example.model.datasheet.Picture;
+import org.example.model.datasheet.Stats;
+import org.example.model.datasheet.Toughness;
+import org.example.view.BoardView;
+import org.example.view.PictureView;
+
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -103,7 +116,8 @@ public class App extends Application {
 
     private Pane makeBoardPane(){
         //mini
-        Model model = new Model(2,2,new Position(0,0),new MeasuringTape(new Length(0.0)));
+        MeasuringTape measuringTape = new MeasuringTape(new Length(0.0));
+        Model model = new Model(2,2,new Position(0,0),measuringTape);
         Board board = new Board(44,30,model);
 
 
