@@ -36,8 +36,8 @@ public class MeasuringTapeView {
             line.setEndX(measuringTape.segment().endX());
             line.setEndY(measuringTape.segment().endY());
             lengthText.setText(String.format("%.1f", measuringTape.segment().length()));
-            lengthText.setX(measuringTape.segment().endX());
-            lengthText.setY(measuringTape.segment().endY());
+            lengthText.setX(measuringTape.segment().startX());
+            lengthText.setY(measuringTape.segment().startY());
         });
     }
 }
