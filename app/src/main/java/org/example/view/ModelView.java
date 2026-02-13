@@ -13,17 +13,17 @@ public class ModelView implements PositionListener {
     private final Model model;
     private final Rectangle rectangle;
 
-    public ModelView(Model model) {
+    public ModelView(Model model, Pane parent) {
         this.model = model;
         this.rectangle = new Rectangle(40, 40);
         this.model.position().addListener(this);
-    }
 
-    public void setOnDrag(Pane parent) {
         rectangle.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             Point2D local = parent.sceneToLocal(event.getSceneX(), event.getSceneY());
             model.moveTo(new Position((int) local.getX(), (int) local.getY()));
         });
+
+        new MeasuringTapeView(model.measuringTape(), parent, rectangle);
     }
 
     @Override

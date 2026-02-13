@@ -4,8 +4,8 @@
 package org.example;
 
 import org.example.model.Board;
-import org.example.model.Length;
 import org.example.model.MeasuringTape;
+import org.example.model.Segment;
 import org.example.model.Model;
 import org.example.model.Position;
 import org.example.model.datasheet.DataSheet;
@@ -116,9 +116,9 @@ public class App extends Application {
 
     private Pane makeBoardPane(){
         //mini
-        MeasuringTape measuringTape = new MeasuringTape(new Length(0.0));
+        MeasuringTape measuringTape = new MeasuringTape(new Segment());
         Model model = new Model(2,2,new Position(0,0),measuringTape);
-        Board board = new Board(44,30,model);
+        Board board = new Board(500,500,model);
 
 
         StackPane pane = new StackPane();

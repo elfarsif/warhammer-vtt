@@ -14,14 +14,10 @@ public class BoardView {
         this.board = board;
         this.pane = pane;
         this.pane.setBackground(Background.fill(Color.LIGHTSALMON));
-        this.pane.setMaxWidth(500);
-        this.pane.setMaxHeight(500);
+        this.pane.setMaxWidth(board.width());
+        this.pane.setMaxHeight(board.height());
 
-        ModelView modelView = new ModelView(this.board.model());
-        modelView.setOnDrag(pane);
-
-        MeasuringTapeView measuringTapeView = new MeasuringTapeView(this.board.model().measuringTape());
-        measuringTapeView.setOnDrag(pane, modelView.getRectangle());
+        ModelView modelView = new ModelView(this.board.model(), pane);
 
         pane.getChildren().add(modelView.getRectangle());
     }

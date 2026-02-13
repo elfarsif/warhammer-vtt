@@ -1,4 +1,4 @@
 package org.example.model;
 
-public record MeasuringTape(Length length) {
+public record MeasuringTape(Segment segment) {
 }
