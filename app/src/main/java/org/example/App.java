@@ -15,6 +15,7 @@ import org.example.model.datasheet.Stats;
 import org.example.model.datasheet.Toughness;
 import org.example.view.BoardView;
 import org.example.view.PictureView;
+import org.example.view.Scale;
 
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -117,8 +118,8 @@ public class App extends Application {
     private Pane makeBoardPane(){
         //mini
         MeasuringTape measuringTape = new MeasuringTape(new Segment());
-        Model model = new Model(2,2,new Position(0,0),measuringTape);
-        Board board = new Board(500,500,model);
+        Model model = new Model(1.5,1.5,new Position(0,0),measuringTape);
+        Board board = new Board(44,37,model);
 
 
         StackPane pane = new StackPane();
@@ -127,7 +128,8 @@ public class App extends Application {
 
         //boardview
         Pane boardviewPane = new Pane();
-        BoardView boardView = new BoardView(board,boardviewPane);
+        Scale scale = new Scale(20);
+        BoardView boardView = new BoardView(board,boardviewPane,scale);
 
         pane.getChildren().addAll(boardView.getPane());
 

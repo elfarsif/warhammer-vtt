@@ -1,5 +1,5 @@
 package org.example.event;
 
 public interface PositionListener {
-    void onPositionChanged(int x, int y);
+    void onPositionChanged(double x, double y);
 }

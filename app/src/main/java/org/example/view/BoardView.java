@@ -10,14 +10,14 @@ public class BoardView {
     private final Board board;
     private final Pane pane;
 
-    public BoardView(Board board, Pane pane) {
+    public BoardView(Board board, Pane pane, Scale scale) {
         this.board = board;
         this.pane = pane;
         this.pane.setBackground(Background.fill(Color.LIGHTSALMON));
-        this.pane.setMaxWidth(board.width());
-        this.pane.setMaxHeight(board.height());
+        this.pane.setMaxWidth(scale.toPixels(board.width()));
+        this.pane.setMaxHeight(scale.toPixels(board.height()));
 
-        ModelView modelView = new ModelView(this.board.model(), pane);
+        ModelView modelView = new ModelView(this.board.model(), pane, scale);
 
         pane.getChildren().add(modelView.getRectangle());
     }
