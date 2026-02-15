@@ -32,8 +32,6 @@ public class GameServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-        MoveCommand cmd = gson.fromJson(message, MoveCommand.class);
-        System.out.println("Server recieved message"+cmd);
         broadcast(message);
     }
 
