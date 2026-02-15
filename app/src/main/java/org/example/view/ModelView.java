@@ -2,7 +2,8 @@ package org.example.view;
 
 import org.example.event.PositionListener;
 import org.example.model.Model;
-import org.example.model.Position;
+import org.example.network.GameClient;
+import org.example.network.MoveCommand;
 
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
@@ -15,12 +16,14 @@ public class ModelView implements PositionListener {
     private final Pane parent;
     private final Rectangle rectangle;
     private final Scale scale;
+    private final GameClient gameClient;
     private double offsetX, offsetY;
 
-    public ModelView(Model model, Pane modelLayer, Pane modelOverlayLayer, Scale scale) {
+    public ModelView(Model model, Pane modelLayer, Pane modelOverlayLayer, Scale scale, GameClient gameClient) {
         this.model = model;
         this.parent = modelLayer;
         this.scale = scale;
+        this.gameClient = gameClient;
 
         this.rectangle = setupRectangle(scale);
         this.model.position().addListener(this);
@@ -51,7 +54,7 @@ public class ModelView implements PositionListener {
             Point2D local = parent.sceneToLocal(event.getSceneX(), event.getSceneY());
             double inchX = scale.toInches(local.getX() - offsetX);
             double inchY = scale.toInches(local.getY() - offsetY);
-            model.moveTo(new Position(inchX, inchY));
+            gameClient.sendMove(new MoveCommand(model.id(), inchX, inchY));
         });
     }
 

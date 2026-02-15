@@ -2,6 +2,7 @@ package org.example.view;
 
 import org.example.model.Board;
 import org.example.model.Model;
+import org.example.network.GameClient;
 
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
@@ -12,9 +13,11 @@ public class BoardView {
     private final Pane pane;
     private final Pane modelLayer;
     private final Pane modelOverlayLayer;
+    private final GameClient gameClient;
 
-    public BoardView(Board board, Scale scale) {
+    public BoardView(Board board, Scale scale, GameClient gameClient) {
         this.board = board;
+        this.gameClient = gameClient;
         this.pane = new Pane();
         this.modelLayer = new Pane();
         this.modelOverlayLayer = new Pane();
@@ -33,12 +36,10 @@ public class BoardView {
 
     private void addModels(Scale scale) {
         for (Model model : this.board.models()) {
-            ModelView modelView = new ModelView(model, modelLayer, modelOverlayLayer, scale);
+            ModelView modelView = new ModelView(model, modelLayer, modelOverlayLayer, scale, gameClient);
             modelLayer.getChildren().add(modelView.getRectangle());
         }
     }
 
     public Pane getPane() { return this.pane; }
 }
-
-
