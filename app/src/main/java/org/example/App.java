@@ -8,6 +8,7 @@ import org.example.model.MeasuringTape;
 import org.example.model.Segment;
 import org.example.model.Model;
 import org.example.model.Position;
+import java.util.List;
 import org.example.model.datasheet.DataSheet;
 import org.example.model.datasheet.Movement;
 import org.example.model.datasheet.Picture;
@@ -116,10 +117,9 @@ public class App extends Application {
     }
 
     private Pane makeBoardPane(){
-        //mini
-        MeasuringTape measuringTape = new MeasuringTape(new Segment());
-        Model model = new Model(1.5,1.5,new Position(0,0),measuringTape);
-        Board board = new Board(44,37,model);
+        Model model1 = new Model(1.5, 1.5, new Position(0, 0), new MeasuringTape(new Segment()));
+        Model model2 = new Model(1.5, 1.5, new Position(5, 5), new MeasuringTape(new Segment()));
+        Board board = new Board(44, 37, List.of(model1, model2));
 
 
         StackPane pane = new StackPane();
@@ -127,9 +127,8 @@ public class App extends Application {
         pane.setMinWidth(1000);
 
         //boardview
-        Pane boardviewPane = new Pane();
         Scale scale = new Scale(20);
-        BoardView boardView = new BoardView(board,boardviewPane,scale);
+        BoardView boardView = new BoardView(board,scale);
 
         pane.getChildren().addAll(boardView.getPane());
 

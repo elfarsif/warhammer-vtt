@@ -7,21 +7,40 @@ import org.example.model.Position;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class ModelView implements PositionListener {
     private final Model model;
+    private final Pane parent;
     private final Rectangle rectangle;
     private final Scale scale;
     private double offsetX, offsetY;
 
-    public ModelView(Model model, Pane parent, Scale scale) {
+    public ModelView(Model model, Pane modelLayer, Pane modelOverlayLayer, Scale scale) {
         this.model = model;
+        this.parent = modelLayer;
         this.scale = scale;
-        this.rectangle = new Rectangle(scale.toPixels(model.width()),
-                scale.toPixels(model.height()));
-        this.model.position().addListener(this);
 
+        this.rectangle = setupRectangle(scale);
+        this.model.position().addListener(this);
+        this.setUpInitialPosition();
+        this.setupDragEvent(scale);
+        this.setupMeasuringTape(modelOverlayLayer, scale);
+    }
+
+    private void setUpInitialPosition(){
+        this.onPositionChanged(this.model.position().x(), this.model.position().y());
+    }
+
+    private Rectangle setupRectangle(Scale scale) {
+        Rectangle rect = new Rectangle(scale.toPixels(model.width()),
+                scale.toPixels(model.height()));
+        rect.setFill(Color.LIGHTBLUE);
+        return rect;
+    }
+
+    private void setupDragEvent(Scale scale) {
         rectangle.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
             Point2D local = parent.sceneToLocal(event.getSceneX(), event.getSceneY());
             offsetX = local.getX() - rectangle.getTranslateX();
@@ -34,8 +53,10 @@ public class ModelView implements PositionListener {
             double inchY = scale.toInches(local.getY() - offsetY);
             model.moveTo(new Position(inchX, inchY));
         });
+    }
 
-        new MeasuringTapeView(model.measuringTape(), parent, rectangle, scale);
+    private void setupMeasuringTape(Pane modelOverlayLayer, Scale scale) {
+        new MeasuringTapeView(model.measuringTape(), modelOverlayLayer, rectangle, scale);
     }
 
     @Override

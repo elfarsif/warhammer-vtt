@@ -11,20 +11,41 @@ import javafx.scene.text.Text;
 
 public class MeasuringTapeView {
     private final MeasuringTape measuringTape;
+    private final Pane parent;
     private final Line line;
     private final Text lengthText;
     private final Scale scale;
 
     public MeasuringTapeView(MeasuringTape measuringTape, Pane parent, Rectangle rectangle, Scale scale) {
         this.measuringTape = measuringTape;
+        this.parent = parent;
         this.scale = scale;
-        this.line = new Line();
-        this.lengthText = new Text();
+
+        this.line = setupLine();
+        this.lengthText = setupLengthText();
         parent.getChildren().addAll(line, lengthText);
 
+        setupDragEvent(rectangle);
+    }
+
+    private Line setupLine() {
+        Line l = new Line();
+        l.setVisible(false);
+        return l;
+    }
+
+    private Text setupLengthText() {
+        Text t = new Text();
+        t.setVisible(false);
+        return t;
+    }
+
+    private void setupDragEvent(Rectangle rectangle) {
         rectangle.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
             Point2D local = parent.sceneToLocal(event.getSceneX(), event.getSceneY());
             measuringTape.segment().setStart(scale.toInches(local.getX()), scale.toInches(local.getY()));
+            line.setVisible(true);
+            lengthText.setVisible(true);
             line.setStartX(scale.toPixels(measuringTape.segment().startX()));
             line.setStartY(scale.toPixels(measuringTape.segment().startY()));
             line.setEndX(scale.toPixels(measuringTape.segment().endX()));
@@ -40,6 +61,11 @@ public class MeasuringTapeView {
             lengthText.setText(String.format("%.1f\"", measuringTape.segment().length()));
             lengthText.setX(scale.toPixels(measuringTape.segment().startX()));
             lengthText.setY(scale.toPixels(measuringTape.segment().startY()));
+        });
+
+        rectangle.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
+            line.setVisible(false);
+            lengthText.setVisible(false);
         });
     }
 }

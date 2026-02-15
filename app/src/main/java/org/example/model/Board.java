@@ -1,8 +1,12 @@
 package org.example.model;
 
-public record Board(Integer width, Integer height, Model model) {
+import java.util.List;
+
+public record Board(Integer width, Integer height, List<Model> models) {
     public Board {
-        model.position().setBounds(width, height);
-        model.measuringTape().segment().setBounds(width, height);
+        for (Model model : models) {
+            model.position().setBounds(width, height);
+            model.measuringTape().segment().setBounds(width, height);
+        }
     }
 }
