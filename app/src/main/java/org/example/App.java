@@ -127,11 +127,11 @@ public class App extends Application {
     }
 
     private void joinGame() {
-        TextInputDialog dialog = new TextInputDialog("localhost");
-        dialog.setHeaderText("Enter host IP address:");
-        dialog.showAndWait().ifPresent(ip -> {
+        TextInputDialog dialog = new TextInputDialog("localhost:8887");
+        dialog.setHeaderText("Enter host address (host:port):");
+        dialog.showAndWait().ifPresent(address -> {
             try {
-                gameClient = new GameClient(new URI("ws://" + ip + ":8887"), board);
+                gameClient = new GameClient(new URI("ws://" + address), board);
                 gameClient.connect();
             } catch (Exception ex) {
                 ex.printStackTrace();
