@@ -9,31 +9,21 @@ import org.example.network.GameClient;
 import org.example.network.GameServer;
 import java.net.URI;
 import java.util.List;
+import org.example.loader.DataSheetLoader;
 import org.example.model.datasheet.DataSheet;
-import org.example.model.datasheet.Movement;
-import org.example.model.datasheet.Picture;
-import org.example.model.datasheet.Stats;
-import org.example.model.datasheet.Toughness;
 import org.example.view.BoardView;
-import org.example.view.PictureView;
+import org.example.view.DataSheetView;
 import org.example.view.Scale;
 
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -85,26 +75,10 @@ public class App extends Application {
         rightpanel.setMinWidth(200);
         rightpanel.setBackground(Background.fill(Color.LIGHTCYAN));
 
-        Picture picture = new Picture("/custodian_guard.jpg");
-        Stats stats = new Stats(new Movement(6), new Toughness(7));
-        DataSheet dataSheet = new DataSheet(picture, stats);
+        DataSheet dataSheet = DataSheetLoader.load("/datasheets/custodian_guard.json");
 
-        PictureView pictureView = new PictureView(
-                picture, rightpanel,
-                new ImageView(new Image(getClass().getResourceAsStream(picture.getImagePath())))
-        );
-
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.add(new Label("M"), 0, 0);
-        gridPane.add(new Label("T"), 1, 0);
-        gridPane.add(new Label("6"), 0, 1);
-        gridPane.add(new Label("7"), 1, 1);
-        gridPane.prefWidthProperty().bind(rightpanel.widthProperty());
-
-        Accordion accordion = new Accordion();
-        accordion.getPanes().addAll(new TitledPane("Meele", new VBox()));
-        rightpanel.getChildren().addAll(pictureView.getImageView(), gridPane, accordion);
+        DataSheetView dataSheetView = new DataSheetView(dataSheet, rightpanel);
+        rightpanel.getChildren().add(dataSheetView.getContent());
 
         SplitPane splitPane = new SplitPane(leftpanel, boardContainer, rightpanel);
         root.setCenter(splitPane);

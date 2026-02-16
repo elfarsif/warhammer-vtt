@@ -1,13 +1,5 @@
 package org.example.model.datasheet;
 
+import java.util.List;
 
-public class DataSheet{
-    private final Picture picture;
-    private final Stats stats;
-
-    public DataSheet(Picture picture,Stats stats){
-        this.picture = picture;
-        this.stats = stats;
-    }
-
-}
+public record DataSheet(Picture picture, Stats stats, List<RangedWeapon> rangedWeapons, List<MeleeWeapon> meleeWeapons, List<Ability> abilities) {}

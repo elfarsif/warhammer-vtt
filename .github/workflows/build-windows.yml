@@ -25,6 +25,7 @@ jobs:
           --main-class org.example.App
           --name WarhammerVTT
           --dest output
+          --win-console
 
       - uses: actions/upload-artifact@v4
         with:
