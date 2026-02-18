@@ -1,0 +1,21 @@
+{
+    "picture": { "imagePath": "/custodian_guard.jpg" },
+    "stats": {
+        "movement": { "value": 6 },
+        "toughness": { "value": 7 },
+        "save": { "value": 2 },
+        "wound": { "value": 7 },
+        "leadership": { "value": 2 },
+        "objectiveControl": { "value": 3 }
+    },
+    "rangedWeapons": [
+        { "name": "Guardian Spear", "range": 24, "attack": 2, "ballisticSkill": 2, "strength": 4, "armourPenetration": 1, "damage": 2, "keyword": "Assault" }
+    ],
+    "meleeWeapons": [
+        { "name": "Guardian Spear", "range": 1, "attack": 6, "weaponSkill": 2, "strength": 7, "armourPenetration": 2, "damage": 2, "keyword": "Lethal Hits" }
+    ],
+    "abilities": [
+        { "name": "Martial Ka'tah", "description": "At the start of the Fight phase, select one Ka'tah stance for this unit." },
+        { "name": "Aegis of the Emperor", "description": "This model has a 4+ invulnerable save." }
+    ]
+}

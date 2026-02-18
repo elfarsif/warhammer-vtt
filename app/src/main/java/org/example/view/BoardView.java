@@ -1,5 +1,6 @@
 package org.example.view;
 
+import org.example.event.ModelSelectionListener;
 import org.example.model.Board;
 import org.example.model.Model;
 import org.example.network.GameClient;
@@ -14,10 +15,12 @@ public class BoardView {
     private final Pane modelLayer;
     private final Pane modelOverlayLayer;
     private final GameClient gameClient;
+    private final ModelSelectionListener selectionListener;
 
-    public BoardView(Board board, Scale scale, GameClient gameClient) {
+    public BoardView(Board board, Scale scale, GameClient gameClient, ModelSelectionListener selectionListener) {
         this.board = board;
         this.gameClient = gameClient;
+        this.selectionListener = selectionListener;
         this.pane = new Pane();
         this.modelLayer = new Pane();
         this.modelOverlayLayer = new Pane();
@@ -36,7 +39,7 @@ public class BoardView {
 
     private void addModels(Scale scale) {
         for (Model model : this.board.models()) {
-            ModelView modelView = new ModelView(model, modelLayer, modelOverlayLayer, scale, gameClient);
+            ModelView modelView = new ModelView(model, modelLayer, modelOverlayLayer, scale, gameClient, selectionListener);
             modelLayer.getChildren().add(modelView.getRectangle());
         }
     }

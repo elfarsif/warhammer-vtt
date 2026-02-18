@@ -1,5 +1,6 @@
 package org.example.view;
 
+import org.example.event.ModelSelectionListener;
 import org.example.event.PositionListener;
 import org.example.model.Model;
 import org.example.network.GameClient;
@@ -17,18 +18,21 @@ public class ModelView implements PositionListener {
     private final Rectangle rectangle;
     private final Scale scale;
     private final GameClient gameClient;
+    private final ModelSelectionListener selectionListener;
     private double offsetX, offsetY;
 
-    public ModelView(Model model, Pane modelLayer, Pane modelOverlayLayer, Scale scale, GameClient gameClient) {
+    public ModelView(Model model, Pane modelLayer, Pane modelOverlayLayer, Scale scale, GameClient gameClient, ModelSelectionListener selectionListener) {
         this.model = model;
         this.parent = modelLayer;
         this.scale = scale;
         this.gameClient = gameClient;
+        this.selectionListener = selectionListener;
 
         this.rectangle = setupRectangle(scale);
         this.model.position().addListener(this);
         this.setUpInitialPosition();
         this.setupDragEvent(scale);
+        this.setupHoverEvent();
         this.setupMeasuringTape(modelOverlayLayer, scale);
     }
 
@@ -55,6 +59,12 @@ public class ModelView implements PositionListener {
             double inchX = scale.toInches(local.getX() - offsetX);
             double inchY = scale.toInches(local.getY() - offsetY);
             gameClient.sendMove(new MoveCommand(model.id(), inchX, inchY));
+        });
+    }
+
+    private void setupHoverEvent() {
+        rectangle.setOnMouseEntered(event -> {
+            selectionListener.onModelSelected(model.dataSheet());
         });
     }
 

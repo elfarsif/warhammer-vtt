@@ -1,22 +1,29 @@
 package org.example.view;
 
+import org.example.event.ModelSelectionListener;
 import org.example.model.datasheet.DataSheet;
 
-import javafx.scene.control.Accordion;
-import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class DataSheetView {
+public class DataSheetView implements ModelSelectionListener {
     private final VBox content;
+    private final Pane parent;
 
-    public DataSheetView(DataSheet dataSheet, Pane parent) {
+    public DataSheetView(Pane parent) {
+        this.parent = parent;
         this.content = new VBox();
+    }
+
+    @Override
+    public void onModelSelected(DataSheet dataSheet) {
+        System.out.println("DataSheetView: displaying " + dataSheet.picture().getImagePath() + " | M:" + dataSheet.stats().movement().value() + " T:" + dataSheet.stats().toughness().value());
+        content.getChildren().clear();
 
         PictureView pictureView = new PictureView(
-            dataSheet.picture(), 
+            dataSheet.picture(),
             parent,
             new ImageView(new Image(getClass().getResourceAsStream(dataSheet.picture().getImagePath())))
         );

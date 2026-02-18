@@ -37,6 +37,7 @@ public class App extends Application {
     private Board board;
     private StackPane boardContainer;
     private Scale scale;
+    private DataSheetView dataSheetView;
 
     private Parent createContent(){
         BorderPane root = new BorderPane();
@@ -56,8 +57,10 @@ public class App extends Application {
         root.setTop(vbox);
 
         // board setup
-        Model model1 = new Model("model-1", 1.5, 1.5, new Position(0, 0), new MeasuringTape(new Segment()));
-        Model model2 = new Model("model-2", 1.5, 1.5, new Position(5, 5), new MeasuringTape(new Segment()));
+        DataSheet custodianSheet = DataSheetLoader.load("/datasheets/custodian_guard.json");
+        DataSheet wardenSheet = DataSheetLoader.load("/datasheets/custodian_warden.json");
+        Model model1 = new Model("model-1", 1.5, 1.5, new Position(0, 0), new MeasuringTape(new Segment()), custodianSheet);
+        Model model2 = new Model("model-2", 1.5, 1.5, new Position(5, 5), new MeasuringTape(new Segment()), wardenSheet);
         board = new Board(44, 37, List.of(model1, model2));
         scale = new Scale(20);
 
@@ -75,9 +78,8 @@ public class App extends Application {
         rightpanel.setMinWidth(200);
         rightpanel.setBackground(Background.fill(Color.LIGHTCYAN));
 
-        DataSheet dataSheet = DataSheetLoader.load("/datasheets/custodian_guard.json");
-
-        DataSheetView dataSheetView = new DataSheetView(dataSheet, rightpanel);
+        dataSheetView = new DataSheetView(rightpanel);
+        dataSheetView.onModelSelected(board.models().get(0).dataSheet());
         rightpanel.getChildren().add(dataSheetView.getContent());
 
         SplitPane splitPane = new SplitPane(leftpanel, boardContainer, rightpanel);
@@ -116,7 +118,7 @@ public class App extends Application {
 
     private void buildBoardView() {
         boardContainer.getChildren().clear();
-        BoardView boardView = new BoardView(board, scale, gameClient);
+        BoardView boardView = new BoardView(board, scale, gameClient, dataSheetView);
         boardContainer.getChildren().add(boardView.getPane());
     }
 
