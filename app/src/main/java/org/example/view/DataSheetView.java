@@ -37,7 +37,7 @@ public class DataSheetView implements ModelSelectionListener {
         MeleeWeaponsView meleeWeaponsView = new MeleeWeaponsView(dataSheet.meleeWeapons());
         meleeWeaponsView.getGridPane().prefWidthProperty().bind(parent.widthProperty());
 
-        AbilitiesView abilitiesView = new AbilitiesView(dataSheet.abilities());
+        AbilitiesView abilitiesView = new AbilitiesView(dataSheet.abilities(), parent);
         abilitiesView.getGridPane().prefWidthProperty().bind(parent.widthProperty());
 
         content.getChildren().addAll(pictureView.getImageView(), statsView.getGridPane(), rangedWeaponsView.getGridPane(), meleeWeaponsView.getGridPane(), abilitiesView.getGridPane());

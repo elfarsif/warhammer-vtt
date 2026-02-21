@@ -13,7 +13,11 @@ import org.example.loader.DataSheetLoader;
 import org.example.model.datasheet.DataSheet;
 import org.example.view.BoardView;
 import org.example.view.DataSheetView;
+import org.example.view.DiceRollerView;
 import org.example.view.Scale;
+import org.example.model.dice.DicePool;
+import org.example.model.dice.DiceResult;
+import org.example.model.dice.DiceRoller;
 
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -72,6 +76,10 @@ public class App extends Application {
         VBox leftpanel = new VBox();
         leftpanel.setMinWidth(50);
         leftpanel.setBackground(Background.fill(Color.LIGHTCYAN));
+
+        DiceRoller diceRoller = new DiceRoller(new DicePool(1), new DiceResult(0,0,0,0,0,0));
+        DiceRollerView diceRollerView = new DiceRollerView(diceRoller);
+        leftpanel.getChildren().add(diceRollerView.getContent());
 
         // right panel
         VBox rightpanel = new VBox();
