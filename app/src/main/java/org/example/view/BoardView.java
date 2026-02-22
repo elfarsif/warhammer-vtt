@@ -3,6 +3,7 @@ package org.example.view;
 import org.example.event.ModelSelectionListener;
 import org.example.model.Board;
 import org.example.model.Model;
+import org.example.model.Obstacle;
 import org.example.network.GameClient;
 
 import javafx.scene.layout.Background;
@@ -38,6 +39,10 @@ public class BoardView {
     }
 
     private void addModels(Scale scale) {
+        for (Obstacle obstacle : this.board.obstacles()) {
+            ObstacleView obstacleView = new ObstacleView(obstacle, scale);
+            modelLayer.getChildren().add(obstacleView.getRectangle());
+        }
         for (Model model : this.board.models()) {
             ModelView modelView = new ModelView(model, modelLayer, modelOverlayLayer, scale, gameClient, selectionListener);
             modelLayer.getChildren().add(modelView.getRectangle());

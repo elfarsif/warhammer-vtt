@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.model.Board;
 import org.example.model.MeasuringTape;
+import org.example.model.Obstacle;
 import org.example.model.Segment;
 import org.example.model.Model;
 import org.example.model.Position;
@@ -65,7 +66,8 @@ public class App extends Application {
         DataSheet wardenSheet = DataSheetLoader.load("/datasheets/custodian_warden.json");
         Model model1 = new Model("model-1", 1.5, 1.5, new Position(0, 0), new MeasuringTape(new Segment()), custodianSheet);
         Model model2 = new Model("model-2", 1.5, 1.5, new Position(5, 5), new MeasuringTape(new Segment()), wardenSheet);
-        board = new Board(44, 37, List.of(model1, model2));
+        Obstacle obstacle1 = new Obstacle("obs-1", 3.0, 3.0, new Position(20.5, 17.0));
+        board = new Board(44, 37, List.of(model1, model2), List.of(obstacle1));
         scale = new Scale(20);
 
         boardContainer = new StackPane();
