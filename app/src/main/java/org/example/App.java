@@ -64,10 +64,14 @@ public class App extends Application {
         // board setup
         DataSheet custodianSheet = DataSheetLoader.load("/datasheets/custodian_guard.json");
         DataSheet wardenSheet = DataSheetLoader.load("/datasheets/custodian_warden.json");
+        DataSheet tristraenSheet = DataSheetLoader.load("/datasheets/tristraen.json");
+        DataSheet allarusSheet = DataSheetLoader.load("/datasheets/allarus_custodians.json");
         Model model1 = new Model("model-1", 1.5, 1.5, new Position(0, 0), new MeasuringTape(new Segment()), custodianSheet);
         Model model2 = new Model("model-2", 1.5, 1.5, new Position(5, 5), new MeasuringTape(new Segment()), wardenSheet);
+        Model model3 = new Model("model-3", 1.5, 1.5, new Position(10, 5), new MeasuringTape(new Segment()), tristraenSheet);
+        Model model4 = new Model("model-4", 1.5, 1.5, new Position(15, 5), new MeasuringTape(new Segment()), allarusSheet);
         Obstacle obstacle1 = new Obstacle("obs-1", 3.0, 3.0, new Position(20.5, 17.0));
-        board = new Board(44, 37, List.of(model1, model2), List.of(obstacle1));
+        board = new Board(44, 37, List.of(model1, model2, model3, model4), List.of(obstacle1));
         scale = new Scale(20);
 
         boardContainer = new StackPane();

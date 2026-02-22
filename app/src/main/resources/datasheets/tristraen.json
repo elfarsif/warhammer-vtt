@@ -1,0 +1,22 @@
+{
+    "picture": { "imagePath": "/blade_champion.jpg" },
+    "stats": {
+        "movement": { "value": 6 },
+        "toughness": { "value": 6 },
+        "save": { "value": 2 },
+        "wound": { "value": 6 },
+        "leadership": { "value": 6 },
+        "objectiveControl": { "value": 2 }
+    },
+    "rangedWeapons": [],
+    "meleeWeapons": [
+        { "name": "Vaultswords – Behemor", "range": 1, "attack": 6, "weaponSkill": 2, "strength": 7, "armourPenetration": 2, "damage": 2, "keyword": "Precision" },
+        { "name": "Vaultswords – Hurricanis", "range": 1, "attack": 9, "weaponSkill": 2, "strength": 5, "armourPenetration": 1, "damage": 1, "keyword": "Sustained Hits 1" },
+        { "name": "Vaultswords – Victus", "range": 1, "attack": 5, "weaponSkill": 2, "strength": 6, "armourPenetration": 3, "damage": 3, "keyword": "Devastating Wounds" }
+    ],
+    "abilities": [
+        { "name": "Martial Ka'tah", "description": "At the start of the Fight phase, select one Ka'tah stance for this unit." },
+        { "name": "Vaultswords", "description": "Before selecting targets for this weapon, select one of its profiles to make attacks with." },
+        { "name": "4+ Invulnerable Save", "description": "This model has a 4+ invulnerable save." }
+    ]
+}

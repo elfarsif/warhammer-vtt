@@ -1,19 +1,18 @@
 {
-    "picture": { "imagePath": "/custodian_warden.jpg" },
+    "picture": { "imagePath": "/allarus_custodians.jpg" },
     "stats": {
-        "movement": { "value": 6 },
-        "toughness": { "value": 6 },
+        "movement": { "value": 5 },
+        "toughness": { "value": 7 },
         "save": { "value": 2 },
-        "wound": { "value": 3 },
+        "wound": { "value": 4 },
         "leadership": { "value": 6 },
         "objectiveControl": { "value": 2 }
     },
     "rangedWeapons": [
-        { "name": "Castellan Axe", "range": 24, "attack": 2, "ballisticSkill": 2, "strength": 4, "armourPenetration": 1, "damage": 2, "keyword": "Assault" },
+        { "name": "Balistus Grenade Launcher", "range": 18, "attack": 6, "ballisticSkill": 2, "strength": 4, "armourPenetration": 1, "damage": 1, "keyword": "Blast" },
         { "name": "Guardian Spear", "range": 24, "attack": 2, "ballisticSkill": 2, "strength": 4, "armourPenetration": 1, "damage": 2, "keyword": "Assault" }
     ],
     "meleeWeapons": [
-        { "name": "Castellan Axe", "range": 1, "attack": 4, "weaponSkill": 2, "strength": 9, "armourPenetration": 1, "damage": 3, "keyword": "" },
         { "name": "Guardian Spear", "range": 1, "attack": 5, "weaponSkill": 2, "strength": 7, "armourPenetration": 2, "damage": 2, "keyword": "" }
     ],
     "abilities": [
