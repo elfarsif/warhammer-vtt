@@ -34,7 +34,7 @@ public class GameClient extends WebSocketClient {
         MoveCommand cmd = gson.fromJson(message, MoveCommand.class);
         Platform.runLater(() -> {
             Model model = board.findById(cmd.getModelId());
-            if (model != null) {
+            if (model != null && board.isPositionFree(cmd.getModelId(), cmd.getX(), cmd.getY())) {
                 model.moveTo(new Position(cmd.getX(), cmd.getY()));
             }
         });

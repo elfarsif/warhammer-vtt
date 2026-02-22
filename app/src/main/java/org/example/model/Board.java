@@ -16,4 +16,19 @@ public record Board(Integer width, Integer height, List<Model> models) {
         }
         return null;
     }
+
+    public boolean isPositionFree(String movingId, double newX, double newY) {
+        Model moving = findById(movingId);
+        if (moving == null) return true;
+        for (Model other : models) {
+            if (other.id().equals(movingId)) continue;
+            double ox = other.position().x();
+            double oy = other.position().y();
+            if (newX < ox + other.width()  && newX + moving.width()  > ox &&
+                newY < oy + other.height() && newY + moving.height() > oy) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
